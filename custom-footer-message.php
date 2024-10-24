@@ -2,11 +2,11 @@
 
 /**
 Plugin Name: Custom Footer Message
-Plugin URI: http://example.com
+Plugin URI: https://github.com/washington-chekata/Custom-Footer-Message
 Description: A simple plugin that adds a custom message to the footer
 Version: 1.0.0
 Author: Washington Chekata
-Author URI: http://example.com
+Author URI: https://github.com/washington-chekata
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
