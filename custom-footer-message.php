@@ -4,10 +4,11 @@
 Plugin Name: Custom Footer Message
 Plugin URI: http://example.com
 Description: A simple plugin that adds a custom message to the footer
-Version: 1.0
+Version: 1.0.0
 Author: Washington Chekata
 Author URI: http://example.com
-Licence: GPL2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 //Add menu item to the wordpress admin dashboard
@@ -113,7 +114,7 @@ function cfm_settings_page()
                             $fonts = cfm_get_google_fonts();
                             foreach ($fonts as $font_name => $font_value) {
                                 $selected = get_option('cfm_font_family') == $font_name ? 'selected="selected"' : '';
-                                echo '<option value="' . esc_attr($font_name) . '" ' . $selected . '>' . esc_html($font_name) . '</option>';
+                                echo '<option value="' . esc_attr($font_name) . '" ' . esc_attr($selected) . '>' . esc_html($font_name) . '</option>';
                             }
                             ?>
                         </select>
@@ -161,8 +162,8 @@ function display_custom_footer_message()
         $font_size = esc_attr(get_option('cfm_font_size', '14'));
         $text_align = esc_attr(get_option('cfm_text_align', 'center'));
 
-        echo '<div style="padding: 20px; text-align: ' . $text_align . '; background-color: ' . $bg_color . '; color: ' . $text_color . '; font-family: ' . $font_family . '; font-size: ' . $font_size . 'px;">';
-        echo $footer_message;
+        echo '<div style="padding: 20px; text-align: ' . esc_attr($text_align) . '; background-color: ' . esc_attr($bg_color) . '; color: ' . esc_attr($text_color) . '; font-family: ' . esc_attr($font_family) . '; font-size: ' . esc_attr($font_size) . 'px;">';
+        echo esc_html($footer_message);
         echo '</div>';
     }
 }
