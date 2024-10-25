@@ -150,7 +150,7 @@ function cfmsg_settings_page()
 }
 
 //Display the footer message
-function display_custom_footer_message()
+function cfmsg_display_custom_footer_message()
 {
 
     //check if the message is enabled 
@@ -169,6 +169,6 @@ function display_custom_footer_message()
 }
 
 //Add the function to wordpress
-add_action('wp_footer', 'display_custom_footer_message')
+add_action('wp_footer', 'cfmsg_display_custom_footer_message')
 
 ?>
