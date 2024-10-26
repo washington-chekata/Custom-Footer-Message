@@ -73,6 +73,8 @@ function cfmsg_enqueue_google_fonts()
 //create the settings page
 function cfmsg_settings_page()
 {
+
+
 ?>
     <div class="wrap">
         <h1>Footer Message Settings</h1>
@@ -80,6 +82,7 @@ function cfmsg_settings_page()
             <?php
             settings_fields('cfmsg_settings_group');
             do_settings_sections('cfmsg_settings_group');
+            wp_nonce_field('cfmsg_form_action','cfmsg_nonce');
             ?>
             <table class="form-table">
                 <tr valign="top">
@@ -148,6 +151,7 @@ function cfmsg_settings_page()
 
 <?php
 }
+
 
 //Display the footer message
 function cfmsg_display_custom_footer_message()
