@@ -4,7 +4,7 @@
 Plugin Name: Custom Footer Message
 Plugin URI: https://github.com/washington-chekata/Custom-Footer-Message
 Description: A simple plugin that adds a custom message to the footer
-Version: 1.0.0
+Version: 1.0.1
 Author: Washington Chekata
 Author URI: https://github.com/washington-chekata
 License: GPLv2 or later
