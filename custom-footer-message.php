@@ -4,8 +4,8 @@
 Plugin Name: Custom Footer Message
 Plugin URI: https://github.com/washington-chekata/Custom-Footer-Message
 Description: A simple plugin that adds a custom message to the footer
-Version: 1.0.1
-Author: Washington Chekata
+Version: 1.1.0
+Author: Washington Chekata, wchekata
 Author URI: https://github.com/washington-chekata
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -26,16 +26,51 @@ function cfmsg_add_admin_menu()
 
 add_action('admin_menu', 'cfmsg_add_admin_menu');
 
+/**
+ * Sanitization callbacks
+ */
+// Checkbox sanitization
+function cfmsg_sanitize_checkbox($input) {
+    return (isset($input) && $input === '1') ? '1' : '0';
+}
+
+// Font family sanitization
+function cfmsg_sanitize_font_family($input) {
+    $allowed_fonts = ['Arial', 'Verdana', 'Helvetica', 'Georgia', 'Times New Roman', 'Courier New'];
+    return in_array($input, $allowed_fonts) ? $input : '';
+}
+
+// Text alignment sanitization
+function cfmsg_sanitize_text_align($input) {
+    $allowed_alignments = ['left', 'center', 'right'];
+    return in_array($input, $allowed_alignments) ? $input : 'left';
+}
+
+
 //Register settings for the plugin
 function cfmsg_register_settings()
 {
-    register_setting('cfmsg_settings_group', 'cfmsg_footer_message');
-    register_setting('cfmsg_settings_group', 'cfmsg_message_enabled');
-    register_setting('cfmsg_settings_group', 'cfmsg_text_color');
-    register_setting('cfmsg_settings_group', 'cfmsg_bg_color');
-    register_setting('cfmsg_settings_group', 'cfmsg_font_family');
-    register_setting('cfmsg_settings_group', 'cfmsg_font_size');
-    register_setting('cfmsg_settings_group', 'cfmsg_text_align');
+    register_setting('cfmsg_settings_group', 'cfmsg_footer_message', [
+        'sanitize_callback' => 'sanitize_text_field'
+    ]);
+    register_setting('cfmsg_settings_group', 'cfmsg_message_enabled', [
+        'sanitize_callback' => 'cfmsg_sanitize_checkbox'
+    ]);
+    register_setting('cfmsg_settings_group', 'cfmsg_text_color', [
+        'sanitize_callback' => 'sanitize_hex_color'
+    ]);
+    register_setting('cfmsg_settings_group', 'cfmsg_bg_color', [
+        'sanitize_callback' => 'sanitize_hex_color'
+    ]);
+    register_setting('cfmsg_settings_group', 'cfmsg_font_family', [
+        'sanitize_callback' => 'cfmsg_sanitize_font_family'
+    ]);
+    register_setting('cfmsg_settings_group', 'cfmsg_font_size', [
+       'sanitize_callback' => 'absint' // Absolute integer for font size
+    ]);
+    register_setting('cfmsg_settings_group', 'cfmsg_text_align',[
+         'sanitize_callback' => 'cfmsg_sanitize_text_align'
+    ]);
 }
 
 add_action('admin_init', 'cfmsg_register_settings');
@@ -82,7 +117,7 @@ function cfmsg_settings_page()
             <?php
             settings_fields('cfmsg_settings_group');
             do_settings_sections('cfmsg_settings_group');
-            wp_nonce_field('cfmsg_form_action','cfmsg_nonce');
+            wp_nonce_field('cfmsg_form_action', 'cfmsg_nonce');
             ?>
             <table class="form-table">
                 <tr valign="top">
